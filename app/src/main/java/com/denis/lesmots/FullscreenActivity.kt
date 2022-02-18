@@ -1,6 +1,5 @@
 package com.denis.lesmots
 
-import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
@@ -8,12 +7,16 @@ import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowInsets
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import com.denis.lesmots.databinding.ActivityFullscreenBinding
-import java.io.File
 import java.io.InputStream
+import java.security.AccessController.getContext
 import java.util.*
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -251,21 +254,20 @@ class FullscreenActivity : AppCompatActivity() {
             val col=row[colIndex] as TextView
             word += col.text
         }
-        val toast = Toast.makeText(applicationContext, word, Toast.LENGTH_SHORT)
-        toast.show()
         return word.lowercase(Locale.getDefault())
     }
 
     private fun isInDict(word:String) : Boolean{
         for (el: String in lineList){
             if(el == word){
-                val toast = Toast.makeText(applicationContext, "In dict", Toast.LENGTH_SHORT)
-                toast.show()
                 return true;
             }
         }
-        val toast = Toast.makeText(applicationContext, "Not in dict", Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(applicationContext, "Not in dictionnary", Toast.LENGTH_SHORT)
         toast.show()
+        val row = binding.wordTable[rowPointer] as TableRow
+        val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.shake_error)
+        row.startAnimation(animation)
         return false;
     }
 }
