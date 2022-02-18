@@ -11,6 +11,9 @@ import android.view.WindowInsets
 import android.widget.*
 import androidx.core.view.get
 import com.denis.lesmots.databinding.ActivityFullscreenBinding
+import java.io.File
+import java.io.InputStream
+import java.util.*
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -24,8 +27,7 @@ class FullscreenActivity : AppCompatActivity() {
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler()
-    private var tab = arrayOf(CharArray(5),CharArray(5),CharArray(5),CharArray(5),CharArray(5),CharArray(5))
-    public var c = "Z"
+    private val lineList = mutableListOf<String>()
 
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -92,6 +94,11 @@ class FullscreenActivity : AppCompatActivity() {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         //binding.buttona.setOnTouchListener(delayHideTouchListener)
+
+        //val inputStream: InputStream = File("src/main/res/dict.txt").inputStream()
+        //inputStream.bufferedReader().useLines { lines -> lines.forEach { lineList.add(it)} }
+        lineList.add("denis")
+        lineList.add("azert")
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -207,10 +214,11 @@ class FullscreenActivity : AppCompatActivity() {
     }
 
     fun onEnterClick(view: View){
-       if(rowPointer<5) {
-           rowPointer++
-           colPointer=0
-           onSelectedTileChange()
+        val word = getWord()
+        if(isInDict(word) && (rowPointer<5)) {
+            rowPointer++
+            colPointer=0
+            onSelectedTileChange()
        }
     }
 
@@ -235,6 +243,30 @@ class FullscreenActivity : AppCompatActivity() {
             }
             getActiveTile().background= resources.getDrawable(R.drawable.active_char_background,theme)
         }
+    }
 
+    private fun getWord(): String{
+        var word=""
+        val row = binding.wordTable[rowPointer] as TableRow
+        for (colIndex: Int in 0..4){
+            val col=row[colIndex] as TextView
+            word += col.text
+        }
+        val toast = Toast.makeText(applicationContext, word, Toast.LENGTH_SHORT)
+        toast.show()
+        return word.lowercase(Locale.getDefault())
+    }
+
+    private fun isInDict(word:String) : Boolean{
+        for (el: String in lineList){
+            if(el == word){
+                val toast = Toast.makeText(applicationContext, "In dict", Toast.LENGTH_SHORT)
+                toast.show()
+                return true;
+            }
+        }
+        val toast = Toast.makeText(applicationContext, "Not in dict", Toast.LENGTH_SHORT)
+        toast.show()
+        return false;
     }
 }
