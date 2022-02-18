@@ -95,10 +95,9 @@ class FullscreenActivity : AppCompatActivity() {
         // while interacting with the UI.
         //binding.buttona.setOnTouchListener(delayHideTouchListener)
 
-        //val inputStream: InputStream = File("src/main/res/dict.txt").inputStream()
-        //inputStream.bufferedReader().useLines { lines -> lines.forEach { lineList.add(it)} }
-        lineList.add("denis")
-        lineList.add("azert")
+
+        val inputStream: InputStream = resources.openRawResource(R.raw.dict)
+        inputStream.bufferedReader().useLines { lines -> lines.forEach { lineList.add(it)} }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
