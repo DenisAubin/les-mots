@@ -226,15 +226,22 @@ class FullscreenActivity : AppCompatActivity() {
 
     fun onEnterClick(view: View){
         val word = getWord()
-        if(isInDict(word) && (rowPointer<5)) {
+        if(isInDict(word)) {
             if(word == randomWord){
-                val toast = Toast.makeText(applicationContext, "Bien joué mec!", Toast.LENGTH_SHORT)
+                val toast = Toast.makeText(applicationContext, "Bien joué!", Toast.LENGTH_SHORT)
                 toast.show()
                 newGame()
             }else{
-                colorRow(word)
-                rowPointer++
-                colPointer=0
+                if (rowPointer < 5){
+                    colorRow(word)
+                    rowPointer++
+                    colPointer=0
+                }else{
+                    colorRow(word)
+                    val toast = Toast.makeText(applicationContext, "Perdu!", Toast.LENGTH_SHORT)
+                    toast.show()
+                    binding.randomWord.visibility=View.VISIBLE
+                }
             }
        }
     }
@@ -288,6 +295,7 @@ class FullscreenActivity : AppCompatActivity() {
 
     private fun newGame(){
         randomWord = lineList[Random.nextInt(0,lineList.size-1)]
+        binding.randomWord.visibility=View.GONE
         binding.randomWord.text=randomWord
         colPointer=0
         rowPointer=0
@@ -300,6 +308,13 @@ class FullscreenActivity : AppCompatActivity() {
             }
         }
         getActiveTile().background= resources.getDrawable(R.drawable.active_char_background,theme)
+        for(rowIndex:Int in 0..2){
+            val row = binding.keyboard[rowIndex] as TableRow
+            for(colIndex:Int in 0 until (row.childCount)){
+                val key= row[colIndex] as TextView
+                key.background= resources.getDrawable(R.drawable.char_background,theme)
+            }
+        }
     }
 
     private fun colorRow(word: String){
