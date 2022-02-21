@@ -248,6 +248,9 @@ class FullscreenActivity : AppCompatActivity() {
                     val toast = Toast.makeText(applicationContext, "Perdu!", Toast.LENGTH_SHORT)
                     toast.show()
                     binding.randomWord.visibility=View.VISIBLE
+                    Handler().postDelayed({
+                        newGame()
+                    }, 3000)
                 }
             }
        }
