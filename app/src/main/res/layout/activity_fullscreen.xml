@@ -69,7 +69,6 @@
                         android:layout_marginTop="40dp"
                         android:background="@drawable/char_background"
                         android:gravity="center"
-                        android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -379,12 +378,13 @@
                             android:layout_height="match_parent"
                             android:gravity="center">
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttona"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -394,12 +394,13 @@
                                 android:textSize="12sp"
                                 tools:ignore="TouchTargetSizeCheck" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonz"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -409,12 +410,13 @@
                                 android:textSize="12sp"
                                 tools:ignore="TouchTargetSizeCheck" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttone"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -424,11 +426,12 @@
                                 android:textSize="12sp"
                                 app:iconTint="#1EFFFFFF" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonr"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -437,12 +440,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttont"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -451,12 +455,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttony"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -465,12 +470,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonu"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -479,12 +485,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttoni"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -494,12 +501,13 @@
                                 android:textSize="12sp"
                                 tools:ignore="TouchTargetSizeCheck" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttono"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -508,12 +516,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonp"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -530,13 +539,14 @@
                             android:layout_height="match_parent"
                             android:gravity="center">
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonq"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
-                                android:minWidth="0dp"
+                                android:background="@drawable/char_background"
 
+                                android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
                                 android:text="Q"
@@ -544,26 +554,27 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttons"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
+                                android:onClick="onKeyClick"
                                 android:text="S"
                                 android:textAllCaps="false"
                                 android:textColor="@color/font_color"
-                                android:textSize="12sp"
-                                android:onClick="onKeyClick" />
+                                android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttond"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
-
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -572,12 +583,12 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonf"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
-
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -586,11 +597,12 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttong"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
+                                android:background="@drawable/char_background"
 
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
@@ -600,12 +612,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonh"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -614,12 +627,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonj"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -628,12 +642,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonk"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -642,12 +657,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonl"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -656,12 +672,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonm"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -677,27 +694,29 @@
                             android:layout_height="match_parent"
                             android:gravity="center">
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonreturn"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onReturnClick"
-                                android:text="1"
+                                android:text="Ret"
                                 android:textAllCaps="false"
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp"
                                 tools:ignore="TouchTargetSizeCheck" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonw"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -706,12 +725,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonx"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -720,12 +740,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonc"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -735,12 +756,13 @@
                                 android:textSize="12sp"
                                 tools:ignore="TouchTargetSizeCheck" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonv"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -749,12 +771,13 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonb"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -764,12 +787,13 @@
                                 android:textSize="12sp"
                                 tools:ignore="TouchTargetSizeCheck" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonn"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="38dp"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onKeyClick"
@@ -778,16 +802,17 @@
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/buttonenter"
                                 style="@style/Widget.AppCompat.Button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="60dp"
 
+                                android:background="@drawable/char_background"
                                 android:minWidth="0dp"
                                 android:minHeight="0dp"
                                 android:onClick="onEnterClick"
-                                android:text="2"
+                                android:text="Ok"
                                 android:textAllCaps="false"
                                 android:textColor="@color/font_color"
                                 android:textSize="12sp" />

@@ -216,7 +216,7 @@ class FullscreenActivity : AppCompatActivity() {
 
     fun onKeyClick(view: View) {
         if(colPointer<5){
-            val b= view as Button
+            val b= view as TextView
             val case = getActiveTile()
             case.text=b.text;
             colPointer++
@@ -307,8 +307,12 @@ class FullscreenActivity : AppCompatActivity() {
             if (randomWord.contains(word[charIndex])){
                 if(word[charIndex] == randomWord[charIndex]){
                     getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.green_char_background,theme)
+                    val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
+                    findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.green_char_background,theme)
                 }else{
                     getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.orange_char_background,theme)
+                    val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
+                    findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.orange_char_background,theme)
                 }
             }else{
                 getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.char_background,theme)
