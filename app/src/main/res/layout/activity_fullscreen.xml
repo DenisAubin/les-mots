@@ -52,6 +52,15 @@
                     android:layout_height="match_parent"
                     android:fadingEdge="horizontal|vertical">
 
+                    <TextView
+                        android:id="@+id/randomWord"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="166dp"
+                        android:layout_marginTop="59dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/wordTable" />
+
                     <TableLayout
                         android:id="@+id/wordTable"
                         android:layout_width="wrap_content"

@@ -14,8 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import com.denis.lesmots.databinding.ActivityFullscreenBinding
 import java.io.InputStream
-import java.security.AccessController.getContext
 import java.util.*
+import kotlin.random.Random
 
 
 /**
@@ -31,6 +31,7 @@ class FullscreenActivity : AppCompatActivity() {
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler()
     private val lineList = mutableListOf<String>()
+    private lateinit var randomWord : String
 
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -101,6 +102,9 @@ class FullscreenActivity : AppCompatActivity() {
 
         val inputStream: InputStream = resources.openRawResource(R.raw.dict)
         inputStream.bufferedReader().useLines { lines -> lines.forEach { lineList.add(it)} }
+
+        randomWord = lineList[Random.nextInt(0,lineList.size-1)]
+        binding.randomWord.text=randomWord
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -181,6 +185,11 @@ class FullscreenActivity : AppCompatActivity() {
         return row[colPointer] as TextView
     }
 
+    fun getSpecificTile(colIndex:Int,rowIndex:Int) : TextView {
+        val row= binding.wordTable[rowIndex] as TableRow
+        return row[colIndex] as TextView
+    }
+
     fun getPreviousTile() : TextView {
         if (rowPointer ==0 && colPointer==0){
             return getActiveTile()
@@ -218,9 +227,15 @@ class FullscreenActivity : AppCompatActivity() {
     fun onEnterClick(view: View){
         val word = getWord()
         if(isInDict(word) && (rowPointer<5)) {
-            rowPointer++
-            colPointer=0
-            onSelectedTileChange()
+            if(word == randomWord){
+                val toast = Toast.makeText(applicationContext, "Bien joué mec!", Toast.LENGTH_SHORT)
+                toast.show()
+                newGame()
+            }else{
+                colorRow(word)
+                rowPointer++
+                colPointer=0
+            }
        }
     }
 
@@ -269,5 +284,35 @@ class FullscreenActivity : AppCompatActivity() {
         val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.shake_error)
         row.startAnimation(animation)
         return false;
+    }
+
+    private fun newGame(){
+        randomWord = lineList[Random.nextInt(0,lineList.size-1)]
+        binding.randomWord.text=randomWord
+        colPointer=0
+        rowPointer=0
+        for (colIndex:Int in 0..4){
+            for (rowIndex: Int in 0..5){
+                val row= binding.wordTable[rowIndex] as TableRow
+                val case= row[colIndex] as TextView
+                case.text=""
+                case.background= resources.getDrawable(R.drawable.char_background,theme)
+            }
+        }
+        getActiveTile().background= resources.getDrawable(R.drawable.active_char_background,theme)
+    }
+
+    private fun colorRow(word: String){
+        for (charIndex:Int in 0..4){
+            if (randomWord.contains(word[charIndex])){
+                if(word[charIndex] == randomWord[charIndex]){
+                    getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.green_char_background,theme)
+                }else{
+                    getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.orange_char_background,theme)
+                }
+            }else{
+                getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.char_background,theme)
+            }
+        }
     }
 }
