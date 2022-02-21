@@ -316,6 +316,8 @@ class FullscreenActivity : AppCompatActivity() {
                 }
             }else{
                 getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.char_background,theme)
+                val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
+                findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.black_char_background,theme)
             }
         }
     }
