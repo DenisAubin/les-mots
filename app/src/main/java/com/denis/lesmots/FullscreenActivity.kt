@@ -13,8 +13,12 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import com.denis.lesmots.databinding.ActivityFullscreenBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import java.io.InputStream
 import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.timerTask
 import kotlin.random.Random
 
 
@@ -230,7 +234,10 @@ class FullscreenActivity : AppCompatActivity() {
             if(word == randomWord){
                 val toast = Toast.makeText(applicationContext, "Bien joué!", Toast.LENGTH_SHORT)
                 toast.show()
-                newGame()
+                colorRow(word)
+                Handler().postDelayed({
+                    newGame()
+                }, 2000)
             }else{
                 if (rowPointer < 5){
                     colorRow(word)
