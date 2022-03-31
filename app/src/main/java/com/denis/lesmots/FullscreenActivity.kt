@@ -36,6 +36,7 @@ class FullscreenActivity : AppCompatActivity() {
     private val hideHandler = Handler()
     private val lineList = mutableListOf<String>()
     private lateinit var randomWord : String
+    private val NOT_IN_DICTIONNARY_MESSAGE = "Pas dans le dictionnaire"
 
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -295,7 +296,7 @@ class FullscreenActivity : AppCompatActivity() {
                 return true;
             }
         }
-        val toast = Toast.makeText(applicationContext, "Not in dictionnary", Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(applicationContext, NOT_IN_DICTIONNARY_MESSAGE, Toast.LENGTH_SHORT)
         toast.show()
         val row = binding.wordTable[rowPointer] as TableRow
         val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.shake_error)
