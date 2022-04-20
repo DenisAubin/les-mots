@@ -14,10 +14,10 @@
         android:duration="100"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:fromXScale="110%"
-        android:fromYScale="110%"
-        android:toXScale="100%"
-        android:toYScale="100%"
+        android:fromXScale="100%"
+        android:fromYScale="100%"
+        android:toXScale="91%"
+        android:toYScale="91%"
         android:startOffset="100"
         />
 </set>
