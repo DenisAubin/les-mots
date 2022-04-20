@@ -37,7 +37,7 @@ class FullscreenActivity : AppCompatActivity() {
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler(Looper.getMainLooper())
     private val lineList = mutableListOf<String>()
-    private lateinit var randomWord : String
+    private lateinit var randomWord: String
 
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -49,12 +49,12 @@ class FullscreenActivity : AppCompatActivity() {
             // and API 19 (KitKat). It is safe to use them, as they are inlined
             // at compile-time and do nothing on earlier devices.
             fullscreenContent.systemUiVisibility =
-                    View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                            View.SYSTEM_UI_FLAG_FULLSCREEN or
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                View.SYSTEM_UI_FLAG_LOW_PROFILE or
+                        View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
         }
     }
 
@@ -82,11 +82,11 @@ class FullscreenActivity : AppCompatActivity() {
         }
         false
     }
-    private lateinit var activeCharBackground : Drawable
-    private lateinit var defaultCharBackground : Drawable
-    private lateinit var greenCharBackground : Drawable
-    private lateinit var orangeCharBackground : Drawable
-    private lateinit var blackCharBackground : Drawable
+    private lateinit var activeCharBackground: Drawable
+    private lateinit var defaultCharBackground: Drawable
+    private lateinit var greenCharBackground: Drawable
+    private lateinit var orangeCharBackground: Drawable
+    private lateinit var blackCharBackground: Drawable
 
     @SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,16 +112,16 @@ class FullscreenActivity : AppCompatActivity() {
 
 
         val inputStream: InputStream = resources.openRawResource(R.raw.dict)
-        inputStream.bufferedReader().useLines { lines -> lines.forEach { lineList.add(it)} }
+        inputStream.bufferedReader().useLines { lines -> lines.forEach { lineList.add(it) } }
 
-        randomWord = lineList[Random.nextInt(0,lineList.size-1)]
-        binding.randomWord.text=randomWord
+        randomWord = lineList[Random.nextInt(0, lineList.size - 1)]
+        binding.randomWord.text = randomWord
 
         activeCharBackground = resources.getDrawable(R.drawable.char_background, theme)
         defaultCharBackground = resources.getDrawable(R.drawable.char_background, theme)
         greenCharBackground = resources.getDrawable(R.drawable.green_char_background, theme)
         orangeCharBackground = resources.getDrawable(R.drawable.orange_char_background, theme)
-        blackCharBackground  = resources.getDrawable(R.drawable.black_char_background, theme)
+        blackCharBackground = resources.getDrawable(R.drawable.black_char_background, theme)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -158,8 +158,8 @@ class FullscreenActivity : AppCompatActivity() {
             fullscreenContent.windowInsetsController?.show(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
         } else {
             fullscreenContent.systemUiVisibility =
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         }
         isFullscreen = true
 
@@ -197,118 +197,119 @@ class FullscreenActivity : AppCompatActivity() {
         private const val UI_ANIMATION_DELAY = 300
     }
 
-    private fun getActiveTile() : TextView {
-        val row= binding.wordTable[rowPointer] as TableRow
+    private fun getActiveTile(): TextView {
+        val row = binding.wordTable[rowPointer] as TableRow
         return row[colPointer] as TextView
     }
 
-    private fun getSpecificTile(colIndex:Int, rowIndex:Int) : TextView {
-        val row= binding.wordTable[rowIndex] as TableRow
+    private fun getSpecificTile(colIndex: Int, rowIndex: Int): TextView {
+        val row = binding.wordTable[rowIndex] as TableRow
         return row[colIndex] as TextView
     }
 
-    private fun getPreviousTile() : TextView {
-        if (rowPointer ==0 && colPointer==0){
+    private fun getPreviousTile(): TextView {
+        if (rowPointer == 0 && colPointer == 0) {
             return getActiveTile()
         }
-        if(colPointer==0){
-            val row= binding.wordTable[rowPointer-1] as TableRow
+        if (colPointer == 0) {
+            val row = binding.wordTable[rowPointer - 1] as TableRow
             return row[4] as TextView
         }
-        val row= binding.wordTable[rowPointer] as TableRow
-        return row[colPointer-1] as TextView
+        val row = binding.wordTable[rowPointer] as TableRow
+        return row[colPointer - 1] as TextView
     }
 
-    private fun getNextTile() : TextView {
-        if (rowPointer ==5 && colPointer==4){
+    private fun getNextTile(): TextView {
+        if (rowPointer == 5 && colPointer == 4) {
             return getActiveTile()
         }
-        if(colPointer==4){
-            val row= binding.wordTable[rowPointer+1] as TableRow
+        if (colPointer == 4) {
+            val row = binding.wordTable[rowPointer + 1] as TableRow
             return row[0] as TextView
         }
-        val row= binding.wordTable[rowPointer] as TableRow
-        return row[colPointer+1] as TextView
+        val row = binding.wordTable[rowPointer] as TableRow
+        return row[colPointer + 1] as TextView
     }
 
     fun onKeyClick(view: View) {
-        if(colPointer<5){
-            val b= view as TextView
+        if (colPointer < 5) {
+            val b = view as TextView
             val case = getActiveTile()
-            case.text=b.text
+            case.text = b.text
             colPointer++
             onSelectedTileChange()
         }
     }
 
-    fun onEnterClick(){
+    fun onEnterClick(view: View) {
         val word = getWord()
-        if(isInDict(word)) {
-            if(word == randomWord){
+        if (isInDict(word)) {
+            if (word == randomWord) {
                 val toast = Toast.makeText(applicationContext, "Bien joué!", Toast.LENGTH_SHORT)
                 toast.show()
                 colorRow(word)
                 Handler(Looper.getMainLooper()).postDelayed({
                     newGame()
                 }, 2000)
-            }else{
-                if (rowPointer < 5){
+            } else {
+                if (rowPointer < 5) {
                     colorRow(word)
                     rowPointer++
-                    colPointer=0
-                }else{
+                    colPointer = 0
+                } else {
                     colorRow(word)
                     val toast = Toast.makeText(applicationContext, "Perdu!", Toast.LENGTH_SHORT)
                     toast.show()
-                    binding.randomWord.visibility=View.VISIBLE
+                    binding.randomWord.visibility = View.VISIBLE
                     Handler(Looper.getMainLooper()).postDelayed({
                         newGame()
                     }, 3000)
                 }
             }
-       }
+        }
     }
 
-    fun onReturnClick(){
-        if(colPointer>0){
+    fun onReturnClick(view: View) {
+        if (colPointer > 0) {
             colPointer--
             val case = getActiveTile()
-            case.text=""
+            case.text = ""
             onSelectedTileChange(false)
         }
     }
 
-    private fun onSelectedTileChange(b:Boolean=true){
-        if(b){
-            if(colPointer<5 && rowPointer<6){
-                getActiveTile().background= activeCharBackground
+    private fun onSelectedTileChange(b: Boolean = true) {
+        if (b) {
+            if (colPointer < 5 && rowPointer < 6) {
+                getActiveTile().background = activeCharBackground
             }
-            getPreviousTile().background= defaultCharBackground
-        }else{
-            if(colPointer<5 && rowPointer<6){
-                getNextTile().background= defaultCharBackground
+            getPreviousTile().background = defaultCharBackground
+        } else {
+            if (colPointer < 5 && rowPointer < 6) {
+                getNextTile().background = defaultCharBackground
             }
-            getActiveTile().background= activeCharBackground
+            getActiveTile().background = activeCharBackground
         }
     }
 
-    private fun getWord(): String{
-        var word=""
+    private fun getWord(): String {
+        var word = ""
         val row = binding.wordTable[rowPointer] as TableRow
-        for (colIndex: Int in 0..4){
-            val col=row[colIndex] as TextView
+        for (colIndex: Int in 0..4) {
+            val col = row[colIndex] as TextView
             word += col.text
         }
         return word.lowercase(Locale.getDefault())
     }
 
-    private fun isInDict(word:String) : Boolean{
-        for (el: String in lineList){
-            if(el == word){
+    private fun isInDict(word: String): Boolean {
+        for (el: String in lineList) {
+            if (el == word) {
                 return true
             }
         }
-        val toast = Toast.makeText(applicationContext, NOT_IN_DICTIONARY_MESSAGE, Toast.LENGTH_SHORT)
+        val toast =
+            Toast.makeText(applicationContext, NOT_IN_DICTIONARY_MESSAGE, Toast.LENGTH_SHORT)
         toast.show()
         val row = binding.wordTable[rowPointer] as TableRow
         val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.shake_error)
@@ -316,83 +317,104 @@ class FullscreenActivity : AppCompatActivity() {
         return false
     }
 
-    private fun newGame(){
-        randomWord = lineList[Random.nextInt(0,lineList.size-1)]
-        binding.randomWord.visibility=View.GONE
-        binding.randomWord.text=randomWord
-        colPointer=0
-        rowPointer=0
-        for (colIndex:Int in 0..4){
-            for (rowIndex: Int in 0..5){
-                val row= binding.wordTable[rowIndex] as TableRow
-                val case= row[colIndex] as TextView
-                case.text=""
-                case.background= defaultCharBackground
+    private fun newGame() {
+        randomWord = lineList[Random.nextInt(0, lineList.size - 1)]
+        binding.randomWord.visibility = View.GONE
+        binding.randomWord.text = randomWord
+        colPointer = 0
+        rowPointer = 0
+        for (colIndex: Int in 0..4) {
+            for (rowIndex: Int in 0..5) {
+                val row = binding.wordTable[rowIndex] as TableRow
+                val case = row[colIndex] as TextView
+                case.text = ""
+                case.background = defaultCharBackground
             }
         }
-        getActiveTile().background= activeCharBackground
-        for(rowIndex:Int in 0..2){
+        getActiveTile().background = activeCharBackground
+        for (rowIndex: Int in 0..2) {
             val row = binding.keyboard[rowIndex] as TableRow
-            for(colIndex:Int in 0 until (row.childCount)){
-                val key= row[colIndex] as TextView
-                key.background= defaultCharBackground
+            for (colIndex: Int in 0 until (row.childCount)) {
+                val key = row[colIndex] as TextView
+                key.background = defaultCharBackground
             }
         }
     }
 
-    private fun colorRow(word: String){
-        for (charIndex:Int in 0..4){
+    private fun colorRow(word: String) {
+        for (charIndex: Int in 0..4) {
             val specificTile = getSpecificTile(charIndex, rowPointer)
             val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.letter_change)
-            animation.startOffset= 200*(parseLong(charIndex.toString()))
+            val delay: Long = 200 * (parseLong(charIndex.toString()))
+            animation.startOffset = delay
             specificTile.startAnimation(animation)
-            if (randomWord.contains(word[charIndex])){
-                if(word[charIndex] == randomWord[charIndex]){
-                    specificTile.background= greenCharBackground
-                    val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),
-                        ID_DEF_TYPE,packageName)
-                    findViewById<TextView>(keyId).background= greenCharBackground
-                }else{
-                    if(canBeOrange(word, charIndex)){
-                        specificTile.background= orangeCharBackground
-                        val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),
-                            ID_DEF_TYPE,packageName)
-                        if(findViewById<TextView>(keyId).background?.constantState?.equals( greenCharBackground.constantState) == false){
-                            findViewById<TextView>(keyId).background= orangeCharBackground
+            val keyName = "button" + word[charIndex].lowercase()
+            if (randomWord.contains(word[charIndex])) {
+                if (word[charIndex] == randomWord[charIndex]) {
+                    colorLetter(specificTile, greenCharBackground, delay)
+                    val keyId = resources.getIdentifier(
+                        keyName,
+                        ID_DEF_TYPE, packageName
+                    )
+                    colorLetter(findViewById(keyId),greenCharBackground,delay)
+                } else {
+                    if (canBeOrange(word, charIndex)) {
+                        colorLetter(specificTile, orangeCharBackground, delay)
+                        val keyId = resources.getIdentifier(
+                            keyName,
+                            ID_DEF_TYPE, packageName
+                        )
+                        if (findViewById<TextView>(keyId).background?.constantState?.equals(
+                                greenCharBackground.constantState
+                            ) == false
+                        ) {
+                            colorLetter(findViewById(keyId),orangeCharBackground,delay)
                         }
-                    }else{
-                        specificTile.background= defaultCharBackground
-                        val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),
-                            ID_DEF_TYPE,packageName)
-                        findViewById<TextView>(keyId).background= blackCharBackground
+                    } else {
+                        colorLetter(specificTile, defaultCharBackground, delay)
+                        val keyId = resources.getIdentifier(
+                            keyName,
+                            ID_DEF_TYPE, packageName
+                        )
+                        colorLetter(findViewById(keyId),blackCharBackground,delay)
                     }
                 }
-            }else{
-                specificTile.background= defaultCharBackground
-                val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),
-                    ID_DEF_TYPE,packageName)
-                if(findViewById<TextView>(keyId).background.constantState?.equals(defaultCharBackground.constantState) == true){
-                    findViewById<TextView>(keyId).background= blackCharBackground
+            } else {
+                colorLetter(specificTile, defaultCharBackground, delay)
+                val keyId = resources.getIdentifier(
+                    keyName,
+                    ID_DEF_TYPE, packageName
+                )
+                if (findViewById<TextView>(keyId).background.constantState?.equals(
+                        defaultCharBackground.constantState
+                    ) == true
+                ) {
+                    colorLetter(findViewById(keyId),blackCharBackground,delay)
                 }
             }
-
         }
     }
 
-    private fun canBeOrange(word: String, charIndex:Int): Boolean{
+    private fun colorLetter(tile: TextView, background: Drawable, delay: Long) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            tile.background = background
+        }, delay)
+    }
+
+    private fun canBeOrange(word: String, charIndex: Int): Boolean {
         val checkedChar = word[charIndex]
         var count = 0
-        for(i: Int in 0..4){
-            if(randomWord[i]==checkedChar ){
-                count ++
+        for (i: Int in 0..4) {
+            if (randomWord[i] == checkedChar) {
+                count++
             }
-            if(word[i] == checkedChar && i<charIndex){
+            if (word[i] == checkedChar && i < charIndex) {
                 count--
             }
-            if(word[i] == checkedChar && randomWord[i] == checkedChar && i>charIndex){
-                count --
+            if (word[i] == checkedChar && randomWord[i] == checkedChar && i > charIndex) {
+                count--
             }
         }
-        return count >0
+        return count > 0
     }
 }
