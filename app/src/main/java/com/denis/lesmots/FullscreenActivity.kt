@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowInsets
@@ -20,21 +21,23 @@ import java.util.*
 import kotlin.random.Random
 
 
+private const val ID_DEF_TYPE: String = "id"
+private const val NOT_IN_DICTIONARY_MESSAGE = "Pas dans le dictionnaire"
+
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 class FullscreenActivity : AppCompatActivity() {
-
     private var rowPointer = 0
     private var colPointer = 0
     private lateinit var binding: ActivityFullscreenBinding
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
-    private val hideHandler = Handler()
+    private val hideHandler = Handler(Looper.getMainLooper())
     private val lineList = mutableListOf<String>()
     private lateinit var randomWord : String
-    private val NOT_IN_DICTIONNARY_MESSAGE = "Pas dans le dictionnaire"
 
     @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -85,7 +88,7 @@ class FullscreenActivity : AppCompatActivity() {
     private lateinit var orangeCharBackground : Drawable
     private lateinit var blackCharBackground : Drawable
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -194,17 +197,17 @@ class FullscreenActivity : AppCompatActivity() {
         private const val UI_ANIMATION_DELAY = 300
     }
 
-    fun getActiveTile() : TextView {
+    private fun getActiveTile() : TextView {
         val row= binding.wordTable[rowPointer] as TableRow
         return row[colPointer] as TextView
     }
 
-    fun getSpecificTile(colIndex:Int,rowIndex:Int) : TextView {
+    private fun getSpecificTile(colIndex:Int, rowIndex:Int) : TextView {
         val row= binding.wordTable[rowIndex] as TableRow
         return row[colIndex] as TextView
     }
 
-    fun getPreviousTile() : TextView {
+    private fun getPreviousTile() : TextView {
         if (rowPointer ==0 && colPointer==0){
             return getActiveTile()
         }
@@ -216,7 +219,7 @@ class FullscreenActivity : AppCompatActivity() {
         return row[colPointer-1] as TextView
     }
 
-    fun getNextTile() : TextView {
+    private fun getNextTile() : TextView {
         if (rowPointer ==5 && colPointer==4){
             return getActiveTile()
         }
@@ -232,20 +235,20 @@ class FullscreenActivity : AppCompatActivity() {
         if(colPointer<5){
             val b= view as TextView
             val case = getActiveTile()
-            case.text=b.text;
+            case.text=b.text
             colPointer++
             onSelectedTileChange()
         }
     }
 
-    fun onEnterClick(view: View){
+    fun onEnterClick(){
         val word = getWord()
         if(isInDict(word)) {
             if(word == randomWord){
                 val toast = Toast.makeText(applicationContext, "Bien joué!", Toast.LENGTH_SHORT)
                 toast.show()
                 colorRow(word)
-                Handler().postDelayed({
+                Handler(Looper.getMainLooper()).postDelayed({
                     newGame()
                 }, 2000)
             }else{
@@ -258,7 +261,7 @@ class FullscreenActivity : AppCompatActivity() {
                     val toast = Toast.makeText(applicationContext, "Perdu!", Toast.LENGTH_SHORT)
                     toast.show()
                     binding.randomWord.visibility=View.VISIBLE
-                    Handler().postDelayed({
+                    Handler(Looper.getMainLooper()).postDelayed({
                         newGame()
                     }, 3000)
                 }
@@ -266,11 +269,11 @@ class FullscreenActivity : AppCompatActivity() {
        }
     }
 
-    fun onReturnClick(view: View){
+    fun onReturnClick(){
         if(colPointer>0){
             colPointer--
             val case = getActiveTile()
-            case.text="";
+            case.text=""
             onSelectedTileChange(false)
         }
     }
@@ -302,15 +305,15 @@ class FullscreenActivity : AppCompatActivity() {
     private fun isInDict(word:String) : Boolean{
         for (el: String in lineList){
             if(el == word){
-                return true;
+                return true
             }
         }
-        val toast = Toast.makeText(applicationContext, NOT_IN_DICTIONNARY_MESSAGE, Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(applicationContext, NOT_IN_DICTIONARY_MESSAGE, Toast.LENGTH_SHORT)
         toast.show()
         val row = binding.wordTable[rowPointer] as TableRow
         val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.shake_error)
         row.startAnimation(animation)
-        return false;
+        return false
     }
 
     private fun newGame(){
@@ -341,29 +344,33 @@ class FullscreenActivity : AppCompatActivity() {
         for (charIndex:Int in 0..4){
             val specificTile = getSpecificTile(charIndex, rowPointer)
             val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.letter_change)
-            animation.startOffset= 200*(parseLong(charIndex.toString())) as Long
+            animation.startOffset= 200*(parseLong(charIndex.toString()))
             specificTile.startAnimation(animation)
             if (randomWord.contains(word[charIndex])){
                 if(word[charIndex] == randomWord[charIndex]){
                     specificTile.background= greenCharBackground
-                    val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
+                    val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),
+                        ID_DEF_TYPE,packageName)
                     findViewById<TextView>(keyId).background= greenCharBackground
                 }else{
                     if(canBeOrange(word, charIndex)){
                         specificTile.background= orangeCharBackground
-                        val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
+                        val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),
+                            ID_DEF_TYPE,packageName)
                         if(findViewById<TextView>(keyId).background?.constantState?.equals( greenCharBackground.constantState) == false){
                             findViewById<TextView>(keyId).background= orangeCharBackground
                         }
                     }else{
                         specificTile.background= defaultCharBackground
-                        val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
+                        val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),
+                            ID_DEF_TYPE,packageName)
                         findViewById<TextView>(keyId).background= blackCharBackground
                     }
                 }
             }else{
                 specificTile.background= defaultCharBackground
-                val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
+                val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),
+                    ID_DEF_TYPE,packageName)
                 if(findViewById<TextView>(keyId).background.constantState?.equals(defaultCharBackground.constantState) == true){
                     findViewById<TextView>(keyId).background= blackCharBackground
                 }
