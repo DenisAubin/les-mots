@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowInsets
@@ -16,6 +17,7 @@ import com.denis.lesmots.databinding.ActivityFullscreenBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import java.io.InputStream
+import java.lang.Long.parseLong
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.timerTask
@@ -330,31 +332,36 @@ class FullscreenActivity : AppCompatActivity() {
 
     private fun colorRow(word: String){
         for (charIndex:Int in 0..4){
+            val specificTile = getSpecificTile(charIndex, rowPointer)
+            val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.letter_change)
+            animation.startOffset= 200*(parseLong(charIndex.toString())) as Long
+            specificTile.startAnimation(animation)
             if (randomWord.contains(word[charIndex])){
                 if(word[charIndex] == randomWord[charIndex]){
-                    getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.green_char_background,theme)
+                    specificTile.background= resources.getDrawable(R.drawable.green_char_background,theme)
                     val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
                     findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.green_char_background,theme)
                 }else{
                     if(canBeOrange(word, charIndex)){
-                        getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.orange_char_background,theme)
+                        specificTile.background= resources.getDrawable(R.drawable.orange_char_background,theme)
                         val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
                         if(findViewById<TextView>(keyId).background?.constantState?.equals( resources.getDrawable(R.drawable.green_char_background,theme).constantState) == false){
                             findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.orange_char_background,theme)
                         }
                     }else{
-                        getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.char_background,theme)
+                        specificTile.background= resources.getDrawable(R.drawable.char_background,theme)
                         val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
                         findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.black_char_background,theme)
                     }
                 }
             }else{
-                getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.char_background,theme)
+                specificTile.background= resources.getDrawable(R.drawable.char_background,theme)
                 val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
                 if(findViewById<TextView>(keyId).background.constantState?.equals(resources.getDrawable(R.drawable.char_background,theme)?.constantState) == true){
                     findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.black_char_background,theme)
                 }
             }
+
         }
     }
 
