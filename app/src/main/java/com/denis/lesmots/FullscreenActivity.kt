@@ -336,15 +336,42 @@ class FullscreenActivity : AppCompatActivity() {
                     val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
                     findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.green_char_background,theme)
                 }else{
-                    getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.orange_char_background,theme)
-                    val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
-                    findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.orange_char_background,theme)
+                    if(canBeOrange(word, charIndex)){
+                        getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.orange_char_background,theme)
+                        val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
+                        if(findViewById<TextView>(keyId).background?.constantState?.equals( resources.getDrawable(R.drawable.green_char_background,theme).constantState) == false){
+                            findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.orange_char_background,theme)
+                        }
+                    }else{
+                        getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.char_background,theme)
+                        val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
+                        findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.black_char_background,theme)
+                    }
                 }
             }else{
                 getSpecificTile(charIndex,rowPointer).background= resources.getDrawable(R.drawable.char_background,theme)
                 val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
-                findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.black_char_background,theme)
+                if(findViewById<TextView>(keyId).background.constantState?.equals(resources.getDrawable(R.drawable.char_background,theme)?.constantState) == true){
+                    findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.black_char_background,theme)
+                }
             }
         }
+    }
+
+    private fun canBeOrange(word: String, charIndex:Int): Boolean{
+        val checkedChar = word[charIndex]
+        var count = 0
+        for(i: Int in 0..4){
+            if(randomWord[i]==checkedChar ){
+                count ++
+            }
+            if(word[i] == checkedChar && i<charIndex){
+                count--
+            }
+            if(word[i] == checkedChar && randomWord[i] == checkedChar && i>charIndex){
+                count --
+            }
+        }
+        return count >0
     }
 }
