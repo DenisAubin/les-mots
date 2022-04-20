@@ -1,10 +1,10 @@
 package com.denis.lesmots
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowInsets
@@ -14,13 +14,9 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import com.denis.lesmots.databinding.ActivityFullscreenBinding
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import java.io.InputStream
 import java.lang.Long.parseLong
 import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.concurrent.timerTask
 import kotlin.random.Random
 
 
@@ -58,13 +54,13 @@ class FullscreenActivity : AppCompatActivity() {
                             View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
         }
     }
+
     private val showPart2Runnable = Runnable {
         // Delayed display of UI elements
         supportActionBar?.show()
         fullscreenContentControls.visibility = View.VISIBLE
     }
     private var isFullscreen: Boolean = false
-
     private val hideRunnable = Runnable { hide() }
 
     /**
@@ -83,6 +79,11 @@ class FullscreenActivity : AppCompatActivity() {
         }
         false
     }
+    private lateinit var activeCharBackground : Drawable
+    private lateinit var defaultCharBackground : Drawable
+    private lateinit var greenCharBackground : Drawable
+    private lateinit var orangeCharBackground : Drawable
+    private lateinit var blackCharBackground : Drawable
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,6 +113,12 @@ class FullscreenActivity : AppCompatActivity() {
 
         randomWord = lineList[Random.nextInt(0,lineList.size-1)]
         binding.randomWord.text=randomWord
+
+        activeCharBackground = resources.getDrawable(R.drawable.char_background, theme)
+        defaultCharBackground = resources.getDrawable(R.drawable.char_background, theme)
+        greenCharBackground = resources.getDrawable(R.drawable.green_char_background, theme)
+        orangeCharBackground = resources.getDrawable(R.drawable.orange_char_background, theme)
+        blackCharBackground  = resources.getDrawable(R.drawable.black_char_background, theme)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -271,14 +278,14 @@ class FullscreenActivity : AppCompatActivity() {
     private fun onSelectedTileChange(b:Boolean=true){
         if(b){
             if(colPointer<5 && rowPointer<6){
-                getActiveTile().background= resources.getDrawable(R.drawable.active_char_background,theme)
+                getActiveTile().background= activeCharBackground
             }
-            getPreviousTile().background= resources.getDrawable(R.drawable.char_background,theme)
+            getPreviousTile().background= defaultCharBackground
         }else{
             if(colPointer<5 && rowPointer<6){
-                getNextTile().background= resources.getDrawable(R.drawable.char_background,theme)
+                getNextTile().background= defaultCharBackground
             }
-            getActiveTile().background= resources.getDrawable(R.drawable.active_char_background,theme)
+            getActiveTile().background= activeCharBackground
         }
     }
 
@@ -317,15 +324,15 @@ class FullscreenActivity : AppCompatActivity() {
                 val row= binding.wordTable[rowIndex] as TableRow
                 val case= row[colIndex] as TextView
                 case.text=""
-                case.background= resources.getDrawable(R.drawable.char_background,theme)
+                case.background= defaultCharBackground
             }
         }
-        getActiveTile().background= resources.getDrawable(R.drawable.active_char_background,theme)
+        getActiveTile().background= activeCharBackground
         for(rowIndex:Int in 0..2){
             val row = binding.keyboard[rowIndex] as TableRow
             for(colIndex:Int in 0 until (row.childCount)){
                 val key= row[colIndex] as TextView
-                key.background= resources.getDrawable(R.drawable.char_background,theme)
+                key.background= defaultCharBackground
             }
         }
     }
@@ -338,27 +345,27 @@ class FullscreenActivity : AppCompatActivity() {
             specificTile.startAnimation(animation)
             if (randomWord.contains(word[charIndex])){
                 if(word[charIndex] == randomWord[charIndex]){
-                    specificTile.background= resources.getDrawable(R.drawable.green_char_background,theme)
+                    specificTile.background= greenCharBackground
                     val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
-                    findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.green_char_background,theme)
+                    findViewById<TextView>(keyId).background= greenCharBackground
                 }else{
                     if(canBeOrange(word, charIndex)){
-                        specificTile.background= resources.getDrawable(R.drawable.orange_char_background,theme)
+                        specificTile.background= orangeCharBackground
                         val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
-                        if(findViewById<TextView>(keyId).background?.constantState?.equals( resources.getDrawable(R.drawable.green_char_background,theme).constantState) == false){
-                            findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.orange_char_background,theme)
+                        if(findViewById<TextView>(keyId).background?.constantState?.equals( greenCharBackground.constantState) == false){
+                            findViewById<TextView>(keyId).background= orangeCharBackground
                         }
                     }else{
-                        specificTile.background= resources.getDrawable(R.drawable.char_background,theme)
+                        specificTile.background= defaultCharBackground
                         val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
-                        findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.black_char_background,theme)
+                        findViewById<TextView>(keyId).background= blackCharBackground
                     }
                 }
             }else{
-                specificTile.background= resources.getDrawable(R.drawable.char_background,theme)
+                specificTile.background= defaultCharBackground
                 val keyId=resources.getIdentifier("button"+word[charIndex].lowercase(),"id",packageName)
-                if(findViewById<TextView>(keyId).background.constantState?.equals(resources.getDrawable(R.drawable.char_background,theme)?.constantState) == true){
-                    findViewById<TextView>(keyId).background= resources.getDrawable(R.drawable.black_char_background,theme)
+                if(findViewById<TextView>(keyId).background.constantState?.equals(defaultCharBackground.constantState) == true){
+                    findViewById<TextView>(keyId).background= blackCharBackground
                 }
             }
 
