@@ -235,6 +235,8 @@ class FullscreenActivity : AppCompatActivity() {
         if (colPointer < 5) {
             val b = view as TextView
             val case = getActiveTile()
+            val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.letter_change)
+            case.startAnimation(animation)
             case.text = b.text
             colPointer++
             onSelectedTileChange()
@@ -256,6 +258,8 @@ class FullscreenActivity : AppCompatActivity() {
                     colorRow(word)
                     rowPointer++
                     colPointer = 0
+                    val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.letter_change)
+                    getActiveTile().startAnimation(animation)
                 } else {
                     colorRow(word)
                     val toast = Toast.makeText(applicationContext, "Perdu!", Toast.LENGTH_SHORT)
@@ -273,6 +277,8 @@ class FullscreenActivity : AppCompatActivity() {
         if (colPointer > 0) {
             colPointer--
             val case = getActiveTile()
+            val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.letter_change)
+            case.startAnimation(animation)
             case.text = ""
             onSelectedTileChange(false)
         }
