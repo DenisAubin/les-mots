@@ -394,7 +394,7 @@ class FullscreenActivity : AppCompatActivity() {
                         keyName,
                         ID_DEF_TYPE, packageName
                     )
-                    colorLetter(findViewById(keyId),greenCharBackground,delay)
+                    colorLetter(findViewById(keyId), greenCharBackground, delay)
                 } else {
                     if (canBeOrange(word, charIndex)) {
                         colorLetter(specificTile, orangeCharBackground, delay)
@@ -406,7 +406,7 @@ class FullscreenActivity : AppCompatActivity() {
                                 greenCharBackground.constantState
                             ) == false
                         ) {
-                            colorLetter(findViewById(keyId),orangeCharBackground,delay)
+                            colorLetter(findViewById(keyId), orangeCharBackground, delay)
                         }
                     } else {
                         colorLetter(specificTile, defaultCharBackground, delay)
@@ -414,7 +414,7 @@ class FullscreenActivity : AppCompatActivity() {
                             keyName,
                             ID_DEF_TYPE, packageName
                         )
-                        colorLetter(findViewById(keyId),blackCharBackground,delay)
+                        colorLetter(findViewById(keyId), blackCharBackground, delay)
                     }
                 }
             } else {
@@ -427,7 +427,7 @@ class FullscreenActivity : AppCompatActivity() {
                         defaultCharBackground.constantState
                     ) == true
                 ) {
-                    colorLetter(findViewById(keyId),blackCharBackground,delay)
+                    colorLetter(findViewById(keyId), blackCharBackground, delay)
                 }
             }
         }
