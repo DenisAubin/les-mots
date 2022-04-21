@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.MotionEvent
 import android.view.View
 import android.view.WindowInsets
 import android.view.animation.Animation
@@ -66,22 +65,6 @@ class FullscreenActivity : AppCompatActivity() {
     private var isFullscreen: Boolean = false
     private val hideRunnable = Runnable { hide() }
 
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-    private val delayHideTouchListener = View.OnTouchListener { view, motionEvent ->
-        when (motionEvent.action) {
-            MotionEvent.ACTION_DOWN -> if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS)
-            }
-            MotionEvent.ACTION_UP -> view.performClick()
-            else -> {
-            }
-        }
-        false
-    }
     private lateinit var activeCharBackground: Drawable
     private lateinit var defaultCharBackground: Drawable
     private lateinit var greenCharBackground: Drawable
@@ -197,16 +180,30 @@ class FullscreenActivity : AppCompatActivity() {
         private const val UI_ANIMATION_DELAY = 300
     }
 
+    /**
+     * Gets the active tile in the current game.
+     * @return the Active tile as a TextView
+     */
     private fun getActiveTile(): TextView {
         val row = binding.wordTable[rowPointer] as TableRow
         return row[colPointer] as TextView
     }
 
+    /**
+     * Gets the tile specific to the row and column parameters
+     * @param colIndex is the index of the column
+     * @param rowIndex is the index of the row
+     * @return the specific tile as a TextView
+     */
     private fun getSpecificTile(colIndex: Int, rowIndex: Int): TextView {
         val row = binding.wordTable[rowIndex] as TableRow
         return row[colIndex] as TextView
     }
 
+    /**
+     * Gets the tile juste before the active one
+     * @return the Previous tile as a TextView
+     */
     private fun getPreviousTile(): TextView {
         if (rowPointer == 0 && colPointer == 0) {
             return getActiveTile()
@@ -219,6 +216,10 @@ class FullscreenActivity : AppCompatActivity() {
         return row[colPointer - 1] as TextView
     }
 
+    /**
+     * Gets the tile juste after the active one
+     * @return the Next tile as a TextView
+     */
     private fun getNextTile(): TextView {
         if (rowPointer == 5 && colPointer == 4) {
             return getActiveTile()
@@ -231,6 +232,10 @@ class FullscreenActivity : AppCompatActivity() {
         return row[colPointer + 1] as TextView
     }
 
+    /**
+     * Reacts to a click on one of the letters of the keyboard
+     * @param view the view that's been clicked on
+     */
     fun onKeyClick(view: View) {
         if (colPointer < 5) {
             val b = view as TextView
@@ -239,10 +244,14 @@ class FullscreenActivity : AppCompatActivity() {
             case.startAnimation(animation)
             case.text = b.text
             colPointer++
-            onSelectedTileChange()
+            updateActiveTile()
         }
     }
 
+    /**
+     * Reacts to a click on enter key of the keyboard
+     * @param view the view that's been clicked on
+     */
     fun onEnterClick(view: View) {
         val word = getWord()
         if (isInDict(word)) {
@@ -258,8 +267,6 @@ class FullscreenActivity : AppCompatActivity() {
                     colorRow(word)
                     rowPointer++
                     colPointer = 0
-                    val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.letter_change)
-                    getActiveTile().startAnimation(animation)
                 } else {
                     colorRow(word)
                     val toast = Toast.makeText(applicationContext, "Perdu!", Toast.LENGTH_SHORT)
@@ -273,6 +280,10 @@ class FullscreenActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Reacts to a click on return key of the keyboard
+     * @param view the view that's been clicked on
+     */
     fun onReturnClick(view: View) {
         if (colPointer > 0) {
             colPointer--
@@ -280,12 +291,16 @@ class FullscreenActivity : AppCompatActivity() {
             val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.letter_change)
             case.startAnimation(animation)
             case.text = ""
-            onSelectedTileChange(false)
+            updateActiveTile(false)
         }
     }
 
-    private fun onSelectedTileChange(b: Boolean = true) {
-        if (b) {
+    /**
+     * Updates the background of the tiles when the active tile changes
+     * @param isNotReturnKey boolean in case the return key is used
+     */
+    private fun updateActiveTile(isNotReturnKey: Boolean = true) {
+        if (isNotReturnKey) {
             if (colPointer < 5 && rowPointer < 6) {
                 getActiveTile().background = activeCharBackground
             }
@@ -298,6 +313,10 @@ class FullscreenActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Creates a string from the active row
+     * @return the word on the active row
+     */
     private fun getWord(): String {
         var word = ""
         val row = binding.wordTable[rowPointer] as TableRow
@@ -308,6 +327,12 @@ class FullscreenActivity : AppCompatActivity() {
         return word.lowercase(Locale.getDefault())
     }
 
+    /**
+     * Checks whether the parameter string is in the dictionary
+     * And shows a Toast with an animation if not
+     * @param word the word to be checked
+     * @return boolean true if the word is in the dict
+     */
     private fun isInDict(word: String): Boolean {
         for (el: String in lineList) {
             if (el == word) {
@@ -323,6 +348,9 @@ class FullscreenActivity : AppCompatActivity() {
         return false
     }
 
+    /**
+     * Resets the UI and changes the random word in order to play a new game
+     */
     private fun newGame() {
         randomWord = lineList[Random.nextInt(0, lineList.size - 1)]
         binding.randomWord.visibility = View.GONE
@@ -347,6 +375,10 @@ class FullscreenActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Colors the tiles from the active row when the word is in the dictionary
+     * @param word the word from the row that's colored
+     */
     private fun colorRow(word: String) {
         for (charIndex: Int in 0..4) {
             val specificTile = getSpecificTile(charIndex, rowPointer)
@@ -401,12 +433,25 @@ class FullscreenActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Colors the tile with with background and animation sync
+     * @param tile the tile that's being colored
+     * @param background the drawable to use to color the tile
+     * @param delay the delay after which the color gets applied
+     */
     private fun colorLetter(tile: TextView, background: Drawable, delay: Long) {
         Handler(Looper.getMainLooper()).postDelayed({
             tile.background = background
         }, delay)
     }
 
+    /**
+     * Checks whether the tile be colored in orange
+     * Ensures the behaviour with orange and green coloring is correct
+     * @param word the to check
+     * @param charIndex the index at which we want to color
+     * @return the boolean indicating if the tile can be colored orange
+     */
     private fun canBeOrange(word: String, charIndex: Int): Boolean {
         val checkedChar = word[charIndex]
         var count = 0
