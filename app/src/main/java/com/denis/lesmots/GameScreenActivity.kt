@@ -160,7 +160,7 @@ class GameScreenActivity : AppCompatActivity() {
                 toast.show()
                 colorRow(word)
                 Handler(Looper.getMainLooper()).postDelayed({
-                    newGame()
+                    finish()
                 }, 2000)
             } else {
                 if (rowPointer < 5) {
@@ -173,7 +173,7 @@ class GameScreenActivity : AppCompatActivity() {
                     toast.show()
                     binding.randomWord.visibility = View.VISIBLE
                     Handler(Looper.getMainLooper()).postDelayed({
-                        newGame()
+                        finish()
                     }, 3000)
                 }
             }
