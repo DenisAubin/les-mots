@@ -19,6 +19,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.get
 import com.denis.lesmots.databinding.ActivityGameScreenBinding
 import java.io.InputStream
+import java.lang.Integer.parseInt
 import java.util.*
 import kotlin.random.Random
 
@@ -34,7 +35,6 @@ class GameScreenActivity : AppCompatActivity() {
     private var colPointer = 0
 
     private val ID_DEF_TYPE: String = "id"
-    private val NOT_IN_DICTIONARY_MESSAGE = "Pas dans le dictionnaire"
 
     private lateinit var activeCharBackground: Drawable
     private lateinit var defaultCharBackground: Drawable
@@ -160,7 +160,7 @@ class GameScreenActivity : AppCompatActivity() {
                 toast.show()
                 colorRow(word)
                 Handler(Looper.getMainLooper()).postDelayed({
-                    newGame()
+                    finish()
                 }, 2000)
             } else {
                 if (rowPointer < 5) {
@@ -173,7 +173,7 @@ class GameScreenActivity : AppCompatActivity() {
                     toast.show()
                     binding.randomWord.visibility = View.VISIBLE
                     Handler(Looper.getMainLooper()).postDelayed({
-                        newGame()
+                        finish()
                     }, 3000)
                 }
             }
@@ -287,9 +287,23 @@ class GameScreenActivity : AppCompatActivity() {
      */
     private fun getTargetWord(dataFromMenu : String) : String{
         return when("Daily" == dataFromMenu){
-            true -> "denis"
+            true -> dailyWord()
             false -> lineList[Random.nextInt(0, lineList.size - 1)]
         }
+    }
+
+    // 22 avril 2022 -> Fiels
+    // 23 avril 2022 -> pifat ?
+    /**
+     * Generates the word of the day with the day, month and year
+     * @return the word of the day to guess
+     */
+    private fun dailyWord(): String {
+        val day: String = (Calendar.getInstance().get(Calendar.DAY_OF_MONTH)).toString()
+        val month: String = Calendar.getInstance().get(Calendar.MONTH).toString()
+        val year: String = Calendar.getInstance().get(Calendar.YEAR).toString()
+        val date: String = day + month + year
+        return lineList[Random(parseInt(date)).nextInt(0, lineList.size - 1)]
     }
 
     /**
