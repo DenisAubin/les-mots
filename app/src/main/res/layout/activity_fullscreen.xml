@@ -23,34 +23,66 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/MenuTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/app_name"
+                android:text="@string/page_title"
                 android:textColor="@color/font_color"
-                android:textSize="34sp"
+                android:textSize="60sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/newGameContainer"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/active_char_background"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView"
-                android:onClick="onNewGameClick">
+                android:onClick="onNewGameClick"
+                app:layout_constraintEnd_toEndOf="@id/MenuTitle"
+                app:layout_constraintStart_toStartOf="@id/MenuTitle"
+                app:layout_constraintTop_toBottomOf="@id/MenuTitle">
 
                 <TextView
-                    android:id="@+id/nexGameText"
+                    android:id="@+id/nextGameText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
                     android:text="@string/new_game"
                     android:textColor="@color/font_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dailyGameContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/active_char_background"
+                android:onClick="onDailyGameClick"
+                app:layout_constraintEnd_toEndOf="@id/MenuTitle"
+                app:layout_constraintStart_toStartOf="@id/MenuTitle"
+                app:layout_constraintTop_toBottomOf="@id/newGameContainer">
+
+                <TextView
+                    android:id="@+id/dailyGameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/daily_game"
+                    android:textColor="@color/font_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

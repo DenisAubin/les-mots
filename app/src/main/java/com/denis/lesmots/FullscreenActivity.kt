@@ -37,6 +37,13 @@ class FullscreenActivity : AppCompatActivity() {
 
     fun onNewGameClick(view: View) {
         val intent = Intent(this, GameScreenActivity::class.java)
+        intent.putExtra(Intent.EXTRA_TEXT, "Random")
+        this.startActivity(intent)
+    }
+
+    fun onDailyGameClick(view: View) {
+        val intent = Intent(this, GameScreenActivity::class.java)
+        intent.putExtra(Intent.EXTRA_TEXT, "Daily")
         this.startActivity(intent)
     }
 

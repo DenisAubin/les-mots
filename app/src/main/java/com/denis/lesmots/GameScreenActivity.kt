@@ -2,6 +2,7 @@ package com.denis.lesmots
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
@@ -27,7 +28,7 @@ class GameScreenActivity : AppCompatActivity() {
     private lateinit var fullscreenContent: TextView
 
     private val lineList = mutableListOf<String>()
-    private lateinit var randomWord: String
+    private lateinit var targetWord: String
 
     private var rowPointer = 0
     private var colPointer = 0
@@ -65,8 +66,12 @@ class GameScreenActivity : AppCompatActivity() {
         val inputStream: InputStream = resources.openRawResource(R.raw.dict)
         inputStream.bufferedReader().useLines { lines -> lines.forEach { lineList.add(it) } }
 
-        randomWord = lineList[Random.nextInt(0, lineList.size - 1)]
-        binding.randomWord.text = randomWord
+        val dataFromMenu = intent.getStringExtra(Intent.EXTRA_TEXT)
+
+
+
+        targetWord = getTargetWord(dataFromMenu.orEmpty())
+        binding.randomWord.text = targetWord
 
         activeCharBackground = resources.getDrawable(R.drawable.char_background, theme)
         defaultCharBackground = resources.getDrawable(R.drawable.char_background, theme)
@@ -150,7 +155,7 @@ class GameScreenActivity : AppCompatActivity() {
     fun onEnterClick(view: View) {
         val word = getWord()
         if (isInDict(word)) {
-            if (word == randomWord) {
+            if (word == targetWord) {
                 val toast = Toast.makeText(applicationContext, "Bien joué!", Toast.LENGTH_SHORT)
                 toast.show()
                 colorRow(word)
@@ -247,9 +252,9 @@ class GameScreenActivity : AppCompatActivity() {
      * Resets the UI and changes the random word in order to play a new game
      */
     private fun newGame() {
-        randomWord = lineList[Random.nextInt(0, lineList.size - 1)]
+        targetWord = getTargetWord("")
         binding.randomWord.visibility = View.GONE
-        binding.randomWord.text = randomWord
+        binding.randomWord.text = targetWord
         colPointer = 0
         rowPointer = 0
         for (colIndex: Int in 0..4) {
@@ -270,6 +275,13 @@ class GameScreenActivity : AppCompatActivity() {
         }
     }
 
+    private fun getTargetWord(dataFromMenu : String) : String{
+        return when("Daily" == dataFromMenu){
+            true -> "denis"
+            false -> lineList[Random.nextInt(0, lineList.size - 1)]
+        }
+    }
+
     /**
      * Colors the tiles from the active row when the word is in the dictionary
      * @param word the word from the row that's colored
@@ -282,8 +294,8 @@ class GameScreenActivity : AppCompatActivity() {
             animation.startOffset = delay
             specificTile.startAnimation(animation)
             val keyName = "button" + word[charIndex].lowercase()
-            if (randomWord.contains(word[charIndex])) {
-                if (word[charIndex] == randomWord[charIndex]) {
+            if (targetWord.contains(word[charIndex])) {
+                if (word[charIndex] == targetWord[charIndex]) {
                     colorLetter(specificTile, greenCharBackground, delay)
                     val keyId = resources.getIdentifier(
                         keyName,
@@ -351,13 +363,13 @@ class GameScreenActivity : AppCompatActivity() {
         val checkedChar = word[charIndex]
         var count = 0
         for (i: Int in 0..4) {
-            if (randomWord[i] == checkedChar) {
+            if (targetWord[i] == checkedChar) {
                 count++
             }
             if (word[i] == checkedChar && i < charIndex) {
                 count--
             }
-            if (word[i] == checkedChar && randomWord[i] == checkedChar && i > charIndex) {
+            if (word[i] == checkedChar && targetWord[i] == checkedChar && i > charIndex) {
                 count--
             }
         }
