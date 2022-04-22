@@ -6,4 +6,6 @@
     <string name="title_activity_game_screen">GameScreenActivity</string>
     <string name="new_game">Nouvelle partie</string>
     <string name="daily_game">Partie mot du jour</string>
+    <string name="not_in_dict">"Pas dans le dictionnaire"</string>
+    <string name="too_short">"Pas assez long"</string>
 </resources>

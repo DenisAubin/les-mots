@@ -239,8 +239,12 @@ class GameScreenActivity : AppCompatActivity() {
                 return true
             }
         }
+        var msg : String = getString(R.string.not_in_dict)
+        if (word.length < 5){
+            msg=getString(R.string.too_short)
+        }
         val toast =
-            Toast.makeText(applicationContext, NOT_IN_DICTIONARY_MESSAGE, Toast.LENGTH_SHORT)
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT)
         toast.show()
         val row = binding.wordTable[rowPointer] as TableRow
         val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.shake_error)
@@ -275,6 +279,12 @@ class GameScreenActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Gets a target word depending on the used mode
+     *
+     * @param dataFromMenu the data received from the menu indicating the mode
+     * @return the word the player has to find
+     */
     private fun getTargetWord(dataFromMenu : String) : String{
         return when("Daily" == dataFromMenu){
             true -> "denis"
