@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LesMots">
         <activity
+            android:name=".GameScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/title_activity_game_screen"
+            android:theme="@style/Theme.LesMots.Fullscreen" />
+        <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"

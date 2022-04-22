@@ -8,7 +8,10 @@
         <entry key="app/src/main/res/drawable/char_background.xml" value="0.3125" />
         <entry key="app/src/main/res/drawable/green_char_background.xml" value="0.2545" />
         <entry key="app/src/main/res/drawable/orange_char_background.xml" value="0.2545" />
-        <entry key="app/src/main/res/layout/activity_fullscreen.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_fullscreen.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_game_screen.xml" value="0.3416666666666667" />
+        <entry key="app/src/main/res/layout/game_activity.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/game_layout.xml" value="0.3416666666666667" />
       </map>
     </option>
   </component>

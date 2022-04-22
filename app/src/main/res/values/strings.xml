@@ -3,4 +3,6 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="page_title">Les Mots</string>
+    <string name="title_activity_game_screen">GameScreenActivity</string>
+    <string name="new_game">Nouvelle Partie</string>
 </resources>
