@@ -26,7 +26,6 @@ import kotlin.random.Random
 class GameScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGameScreenBinding
-    private lateinit var fullscreenContent: TextView
 
     private val lineList = mutableListOf<String>()
     private lateinit var targetWord: String
@@ -60,8 +59,6 @@ class GameScreenActivity : AppCompatActivity() {
 
         binding = ActivityGameScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        fullscreenContent = binding.titleText
 
         val inputStream: InputStream = resources.openRawResource(R.raw.dict)
         inputStream.bufferedReader().useLines { lines -> lines.forEach { lineList.add(it) } }
