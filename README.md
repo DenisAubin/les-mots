@@ -1,5 +1,5 @@
 # Les Mots
 
-App copie Wordly francais et sans pubs
+App type Wordly francais
 
 APK trouvable dans dossier versions
