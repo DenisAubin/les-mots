@@ -38,7 +38,7 @@ class GameScreenActivity : AppCompatActivity() {
     private lateinit var activeCharBackground: Drawable
     private lateinit var defaultCharBackground: Drawable
     private lateinit var greenCharBackground: Drawable
-    private lateinit var orangeCharBackground: Drawable
+    private lateinit var yellowCharBackground: Drawable
     private lateinit var blackCharBackground: Drawable
 
     private fun hideSystemBars() {
@@ -73,7 +73,7 @@ class GameScreenActivity : AppCompatActivity() {
         activeCharBackground = resources.getDrawable(R.drawable.char_background, theme)
         defaultCharBackground = resources.getDrawable(R.drawable.char_background, theme)
         greenCharBackground = resources.getDrawable(R.drawable.green_char_background, theme)
-        orangeCharBackground = resources.getDrawable(R.drawable.orange_char_background, theme)
+        yellowCharBackground = resources.getDrawable(R.drawable.yellow_char_background, theme)
         blackCharBackground = resources.getDrawable(R.drawable.black_char_background, theme)
     }
 
@@ -236,9 +236,9 @@ class GameScreenActivity : AppCompatActivity() {
                 return true
             }
         }
-        var msg : String = getString(R.string.not_in_dict)
-        if (word.length < 5){
-            msg=getString(R.string.too_short)
+        var msg: String = getString(R.string.not_in_dict)
+        if (word.length < 5) {
+            msg = getString(R.string.too_short)
         }
         val toast =
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT)
@@ -282,8 +282,8 @@ class GameScreenActivity : AppCompatActivity() {
      * @param dataFromMenu the data received from the menu indicating the mode
      * @return the word the player has to find
      */
-    private fun getTargetWord(dataFromMenu : String) : String{
-        return when("Daily" == dataFromMenu){
+    private fun getTargetWord(dataFromMenu: String): String {
+        return when ("Daily" == dataFromMenu) {
             true -> dailyWord()
             false -> lineList[Random.nextInt(0, lineList.size - 1)]
         }
@@ -325,7 +325,7 @@ class GameScreenActivity : AppCompatActivity() {
                     colorLetter(findViewById(keyId), greenCharBackground, delay)
                 } else {
                     if (canBeOrange(word, charIndex)) {
-                        colorLetter(specificTile, orangeCharBackground, delay)
+                        colorLetter(specificTile, yellowCharBackground, delay)
                         val keyId = resources.getIdentifier(
                             keyName,
                             ID_DEF_TYPE, packageName
@@ -334,7 +334,7 @@ class GameScreenActivity : AppCompatActivity() {
                                 greenCharBackground.constantState
                             ) == false
                         ) {
-                            colorLetter(findViewById(keyId), orangeCharBackground, delay)
+                            colorLetter(findViewById(keyId), yellowCharBackground, delay)
                         }
                     } else {
                         colorLetter(specificTile, defaultCharBackground, delay)
