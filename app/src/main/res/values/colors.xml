@@ -16,5 +16,5 @@
     <color name="background_accent">#191C1E</color>
     <color name="font_color">#CCC</color>
     <color name="correctGreen">#FF669900</color>
-    <color name="almostYellow">#FFBF00</color>
+    <color name="almostYellow">#BFFFBF00</color>
 </resources>
