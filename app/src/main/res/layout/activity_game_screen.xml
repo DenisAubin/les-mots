@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_black"
     android:theme="@style/ThemeOverlay.LesMots.FullscreenContainer"
+    android:forceDarkAllowed="false"
     tools:context=".GameScreenActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
